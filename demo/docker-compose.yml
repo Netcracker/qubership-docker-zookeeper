@@ -1,0 +1,39 @@
+version: '2'
+services:
+  zookeeper-1:
+    image: zookeeper:3.8.3
+    environment:
+      - SERVER_ID=1
+      - SERVER_COUNT=3
+      - SERVER_NAME=zookeeper
+      - ADMIN_USERNAME=zadmin
+      - ADMIN_PASSWORD=zadmin
+      - QUORUM_AUTH_ENABLED=true
+  zookeeper-2:
+    image: zookeeper:3.8.3
+    environment:
+      - SERVER_ID=2
+      - SERVER_COUNT=3
+      - SERVER_NAME=zookeeper
+      - ADMIN_USERNAME=zadmin
+      - ADMIN_PASSWORD=zadmin
+      - QUORUM_AUTH_ENABLED=true
+  zookeeper-3:
+    image: zookeeper:3.8.3
+    environment:
+      - SERVER_ID=3
+      - SERVER_COUNT=3
+      - SERVER_NAME=zookeeper
+      - ADMIN_USERNAME=zadmin
+      - ADMIN_PASSWORD=zadmin
+      - QUORUM_AUTH_ENABLED=true
+  haproxy:
+    image: million12/haproxy:1.7.5
+    links:
+      - zookeeper-1
+      - zookeeper-2
+      - zookeeper-3
+    ports:
+      - 2181:2181
+    volumes:
+      - ./haproxy/haproxy.cfg:/etc/haproxy/haproxy.cfg

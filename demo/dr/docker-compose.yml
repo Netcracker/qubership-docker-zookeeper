@@ -1,0 +1,81 @@
+version: '2'
+services:
+  left-zookeeper-1:
+    image: zookeeper:3.8.3
+    environment:
+      - SERVER_ID=1
+      - SERVER_COUNT=3
+      - SERVER_NAME=left-zookeeper
+      - DR_JOINT_CLUSTER=true
+      - DR_ACTIVE_SIDE=left
+      - DR_SERVER_NAME_SUFFIX=zookeeper
+      - ADMIN_USERNAME=zadmin
+      - ADMIN_PASSWORD=zadmin
+  left-zookeeper-2:
+    image: zookeeper:3.8.3
+    environment:
+      - SERVER_ID=2
+      - SERVER_COUNT=3
+      - SERVER_NAME=left-zookeeper
+      - DR_JOINT_CLUSTER=true
+      - DR_ACTIVE_SIDE=left
+      - DR_SERVER_NAME_SUFFIX=zookeeper
+      - ADMIN_USERNAME=zadmin
+      - ADMIN_PASSWORD=zadmin
+  left-zookeeper-3:
+    image: zookeeper:3.8.3
+    environment:
+      - SERVER_ID=3
+      - SERVER_COUNT=3
+      - SERVER_NAME=left-zookeeper
+      - DR_JOINT_CLUSTER=true
+      - DR_ACTIVE_SIDE=left
+      - DR_SERVER_NAME_SUFFIX=zookeeper
+      - ADMIN_USERNAME=zadmin
+      - ADMIN_PASSWORD=zadmin
+  right-zookeeper-1:
+    image: zookeeper:3.8.3
+    environment:
+      - SERVER_ID=4
+      - SERVER_COUNT=3
+      - SERVER_NAME=right-zookeeper
+      - DR_JOINT_CLUSTER=true
+      - DR_ACTIVE_SIDE=right
+      - DR_SERVER_NAME_SUFFIX=zookeeper
+      - ADMIN_USERNAME=zadmin
+      - ADMIN_PASSWORD=zadmin
+  right-zookeeper-2:
+    image: zookeeper:3.8.3
+    environment:
+      - SERVER_ID=5
+      - SERVER_COUNT=3
+      - SERVER_NAME=right-zookeeper
+      - DR_JOINT_CLUSTER=true
+      - DR_ACTIVE_SIDE=left
+      - DR_SERVER_NAME_SUFFIX=zookeeper
+      - ADMIN_USERNAME=zadmin
+      - ADMIN_PASSWORD=zadmin
+  right-zookeeper-3:
+    image: zookeeper:3.8.3
+    environment:
+      - SERVER_ID=6
+      - SERVER_COUNT=3
+      - SERVER_NAME=right-zookeeper
+      - DR_JOINT_CLUSTER=true
+      - DR_ACTIVE_SIDE=left
+      - DR_SERVER_NAME_SUFFIX=zookeeper
+      - ADMIN_USERNAME=zadmin
+      - ADMIN_PASSWORD=zadmin
+  haproxy:
+    image: million12/haproxy:1.7.5
+    links:
+      - left-zookeeper-1
+      - left-zookeeper-2
+      - left-zookeeper-3
+      - right-zookeeper-1
+      - right-zookeeper-2
+      - right-zookeeper-3
+    ports:
+      - 2181:2181
+    volumes:
+      - ./haproxy/haproxy.cfg:/etc/haproxy/haproxy.cfg
