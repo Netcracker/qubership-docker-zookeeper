@@ -52,7 +52,7 @@ RUN set -x \
         apk-tools \
         ncdu \
         coreutils \
-        openssl \
+        openssl=3.3.2-r0 \
         procps \
         zip \
     && rm -rf /var/cache/apk/*
