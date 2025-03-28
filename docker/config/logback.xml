@@ -27,7 +27,7 @@
 
   <property name="zookeeper.log.dir" value="." />
   <property name="zookeeper.log.file" value="zookeeper.log" />
-  <property name="zookeeper.log.threshold" value="DEBUG" />
+  <property name="zookeeper.log.threshold" value="INFO" />
   <property name="zookeeper.log.maxfilesize" value="256MB" />
   <property name="zookeeper.log.maxbackupindex" value="4" />
 
