@@ -34,7 +34,7 @@ Usernames should be unique."
 enable_sasl_config() {
   export CONF_ZOOKEEPER_authProvider_1=org.apache.zookeeper.server.auth.SASLAuthenticationProvider
   export CONF_ZOOKEEPER_requireClientAuthScheme=sasl
-  export SERVER_JVMFLAGS="-Dzookeeper.superUser=${ADMIN_USERNAME} -Dzookeeper.allowSaslFailedClients=false -Djavax.net.debug=ssl -Djdk.tls.client.protocols=TLSv1.3 -Djava.security.auth.login.config=${ZOOKEEPER_HOME}/conf/zookeeper_jaas.conf ${SERVER_JVMFLAGS}"
+  export SERVER_JVMFLAGS="-Dzookeeper.superUser=${ADMIN_USERNAME} -Dzookeeper.allowSaslFailedClients=false -Djavax.net.debug=ssl -Djava.security.auth.login.config=${ZOOKEEPER_HOME}/conf/zookeeper_jaas.conf ${SERVER_JVMFLAGS}"
 
   usernames_array=${ADMIN_USERNAME}
   if [[ -n ${CLIENT_USERNAME} && -n ${CLIENT_PASSWORD} ]]; then
