@@ -264,7 +264,7 @@ if [[ "${ENABLE_SSL}" == "true" ]]; then
   if [[ -f ${SSL_KEY_LOCATION} && -f ${SSL_CERTIFICATE_LOCATION} && -f ${SSL_CA_LOCATION} ]]; then
     mkdir -p ${zookeeper_tls_ks_dir}
     openssl pkcs12 -export -in ${SSL_CERTIFICATE_LOCATION} -inkey ${SSL_KEY_LOCATION} -out ${zookeeper_tls_ks_dir}/zookeeper.keystore.p12 -passout pass:changeit
-    keytool -importkeystore -destkeystore ${SSL_KEYSTORE_LOCATION} -deststorepass changeit -srcstoretype PKCS12 -srckeystore ${zookeeper_tls_ks_dir}/zookeeper.keystore.p12 -srcstorepass changeit
+    keytool -importkeystore -destkeystore ${SSL_KEYSTORE_LOCATION} -deststorepass changeit -deststoretype pkcs12 -srcstoretype PKCS12 -srckeystore ${zookeeper_tls_ks_dir}/zookeeper.keystore.p12 -srcstorepass changeit
     keytool -import -trustcacerts -keystore ${SSL_KEYSTORE_LOCATION} -storepass changeit -noprompt -alias ca-cert -file ${SSL_CA_LOCATION}
     keytool -import -trustcacerts -keystore ${SSL_TRUSTSTORE_LOCATION} -storepass changeit -noprompt -alias ca -file ${SSL_CA_LOCATION}
 

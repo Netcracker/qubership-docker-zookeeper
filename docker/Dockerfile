@@ -141,6 +141,8 @@ RUN chgrp -R 0 ${ZOOKEEPER_HOME} \
 # Upgrade all tools to avoid vulnerabilities
 RUN set -x && apk upgrade --no-cache --available
 
+RUN apk upgrade tezdata
+
 USER 1000:0
 WORKDIR ${ZOOKEEPER_HOME}
 
