@@ -58,6 +58,14 @@ RUN set -x \
         zip \
     && rm -rf /var/cache/apk/*
 
+RUN cp /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt.apk-new \
+    && chmod 644 /etc/ssl/certs/ca-certificates.crt.apk-new \
+    && chown root:root /etc/ssl/certs/ca-certificates.crt.apk-new
+
+# Set permissions and ownership for ca-certificates.crt
+RUN chmod 777 /etc/ssl/certs/ca-certificates.crt \
+    && chown root:root /etc/ssl/certs/ca-certificates.crt
+
 # Add unpriviliged user
 RUN set -x \
     && groupadd -r zookeeper --gid=1000 \
@@ -140,14 +148,6 @@ RUN chgrp -R 0 ${ZOOKEEPER_HOME} \
 
 # Upgrade all tools to avoid vulnerabilities
 RUN set -x && apk upgrade --no-cache --available
-
-RUN cp /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt.apk-new \
-    && chmod 644 /etc/ssl/certs/ca-certificates.crt.apk-new \
-    && chown root:root /etc/ssl/certs/ca-certificates.crt.apk-new
-
-# Set permissions and ownership for ca-certificates.crt
-RUN chmod 777 /etc/ssl/certs/ca-certificates.crt \
-    && chown root:root /etc/ssl/certs/ca-certificates.crt
 
 
 USER 1000:0
