@@ -14,9 +14,9 @@ COPY main.go main.go
 # Tests
 #RUN CGO_ENABLED=0 go test -v ./...
 # Build
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o zookeeper-assistant main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 GO111MODULE=on go build -a -o zookeeper-assistant main.go
 
-FROM eclipse-temurin:8u422-b05-jdk-alpine
+FROM eclipse-temurin:22.0.1_8-jdk-alpine
 
 ENV ZOOKEEPER_HOME=/opt/zookeeper \
     ZOOKEEPER_OPT=/var/opt/zookeeper \
