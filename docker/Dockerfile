@@ -1,4 +1,7 @@
-FROM golang:1.22.4-alpine3.20 as builder
+FROM --platform=$BUILDPLATFORM golang:1.22.4-alpine3.20 as builder
+ARG BUILDPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
 
 WORKDIR /workspace
 # Copy the Go Modules manifests
@@ -14,7 +17,7 @@ COPY main.go main.go
 # Tests
 #RUN CGO_ENABLED=0 go test -v ./...
 # Build
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 GO111MODULE=on go build -a -o zookeeper-assistant main.go
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} GO111MODULE=on go build -a -o zookeeper-assistant main.go
 
 FROM eclipse-temurin:22.0.1_8-jdk-alpine
 
